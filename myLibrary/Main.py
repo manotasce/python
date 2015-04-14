@@ -3,7 +3,6 @@ __author__ = 'Czar'
 import utils
 
 
-
 def main():
     insert='y'
     key='s'
@@ -19,6 +18,9 @@ def main():
             while  insert != 'n':
                 promptAndSaveBookDetails()
                 insert = input('Do you want to add other book detail? (y / n) ').lower()
+        elif key.lower()=="s":
+            searchTerm = input('Enter you searching criteria ')
+            #print(utils.searchBookByIsbn(searchTerm))
     return
 
 
@@ -32,15 +34,24 @@ def promptAndSaveBookDetails():
     category = input('Category ')
     editorial = input('Editorial ')
     pubYear = input('Publishing Year ')
-    utils.insertBook(ISBN,name,author,category,editorial,pubYear)
+
+    # Validate a book entry by isbn before to insert
+    # 4/13/2015
+    if utils.countBookByIsbn(ISBN) ==0:
+        utils.insertBook(ISBN,name,author,category,editorial,pubYear)
+    else:
+        print ('Cannot Insert Book Details for ' + name + ' it already exists!')
     return
 
 # On screen Menu
 def printMenu():
-    outPut = "Welcome to Czar's Library\n"
+    outPut ="\n\n\n"
+    outPut += "Welcome to Czar's Library\n"
     outPut += "Select one option below:\n"
     outPut += "**Insert a Book detail - Press the i key\n"
     outPut +="**Update a Book detail - Press the u key\n"
+    outPut +="**Search for a Book detail - Press the s key\n"
+
     return outPut
 
 
